@@ -39,5 +39,5 @@ Here, `-n` specifies the number of cores used by MPI, which should be equal to t
 
 ### Performance
 <p align="center">
-    ![alt tag](performance.png)
+    <img src="performance.png">
 </p>
