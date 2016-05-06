@@ -21,7 +21,7 @@
 
 char *inp, *res;    // I/O filenames
 FILE *f;            // file pointer
-int N,              // number of cores for openmp
+int N,              // number of threads for openmp
     ichunk,         // # of distributed chunks in I direction
     jchunk,         // # of distributed chunks in J direction
     maxIter;        // max # of iterations
@@ -60,7 +60,7 @@ int parse_args(int argc, char **argv) {
             exit(EXIT_SUCCESS);
         }
 
-        else if (!strcmp( "-n", argv[i]) && (++i < argc)) {
+        else if (!strcmp( "-threads", argv[i]) && (++i < argc)) {
             N = atoi(argv[i]);
         }
 
@@ -322,15 +322,24 @@ int main(int argc, char **argv) {
         // to stop immediately. At the end, gathers processed grids
         // from every rank into 'a_buff' and writes the resulting file.
 
-        // Generate a filename of the form "input.txt.0"
+        // Generate a filename of the form "input.txt.0".
         char *inp_r = malloc(256);
         local_filename(inp_r, my_rank);
 
-        // Read the grid from "input.txt.0" into 'a'
-        double *a = read_input(inp_r, &localI, &localJ);
+        // Read the grid from "input.txt.0" into 'a'.
+        // If there is only one input file, read input.txt instead.
+        double *a;
+
+        if ((ichunk == 1) && (jchunk == 1)) {
+            a = read_input(inp_r, &localI, &localJ);
+        }
+        else {
+            a = read_input(inp, &localI, &localJ);
+        }
+
         a_size = localI * localJ;
 
-        // Calculate height and width of the resulting grid
+        // Calculate height and width of the resulting grid.
         maxI = (localI - 2) * jchunk + 2;
         maxJ = (localJ - 2) * ichunk + 2;
 

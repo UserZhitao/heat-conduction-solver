@@ -16,15 +16,15 @@ Here, `-ichunk` specifies in how many "columns" we split the grid, `-jchunk` –
 
 When `ichunk = 1` and `jchunk = 2`, the division will look like this:
 
-| subgrid 0 |
+| input.txt.0 |
 | --- |
-| **subgrid 1** |
+| **input.txt.1** |
 
 When `ichunk = 2` and `jchunk = 2`, the division will look like this:
 
-| subgrid 0 | subgrid 1 |
+| input.txt.0 | input.txt.1 |
 | --- | --- |
-| **subgrid 2** | **subgrid 3** |
+| **input.txt.2** | **input.txt.3** |
 
 
 ##### Step 3. Compile stencil.c:
@@ -33,9 +33,9 @@ When `ichunk = 2` and `jchunk = 2`, the division will look like this:
 
 ##### Step 4. Run:
 
-``mpirun --bind-to none -n 4 ./s -inp input.txt -res output.txt -n 4 -ichunk 2 -jchunk 2``
+``mpirun --bind-to none -n 4 ./s -inp input.txt -res output.txt -threads 4 -ichunk 2 -jchunk 2``
 
-Here, `-n` specifies the number of cores used by MPI, which should be equal to the number of subgrids (= files), and `ichunk * jchunk = n`. `-threads` is the number of threads used by OMP. `ichunk` and `jchunk` is the number of blocks. Best performance is achieved when `threads = n`.
+Here, `-n` specifies the number of cores used by MPI, which should be equal to the number of subgrids (= files), and `ichunk * jchunk = n`. `-threads` is the number of threads used by OMP. `ichunk` and `jchunk` is the number of blocks. Best performance is achieved when `threads == n`.
 
 ### Performance
 <p align="center">
