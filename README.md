@@ -38,4 +38,6 @@ When `ichunk = 2` and `jchunk = 2`, the division will look like this:
 Here, `-n` specifies the number of cores used by MPI, which should be equal to the number of subgrids (= files), and `ichunk * jchunk = n`. `-threads` is the number of threads used by OMP. `ichunk` and `jchunk` is the number of blocks. Best performance is achieved when `threads = n`.
 
 ### Performance
-![alt tag](performance.png)
+<p align="center">
+    ![alt tag](performance.png)
+</p>
