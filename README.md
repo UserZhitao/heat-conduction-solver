@@ -36,3 +36,6 @@ When `ichunk = 2` and `jchunk = 2`, the division will look like this:
 ``mpirun --bind-to none -n 4 ./s -inp input.txt -res output.txt -n 4 -ichunk 2 -jchunk 2``
 
 Here, `-n` specifies the number of cores used by MPI, which should be equal to the number of subgrids (= files), and `ichunk * jchunk = n`. `-threads` is the number of threads used by OMP. `ichunk` and `jchunk` is the number of blocks. Best performance is achieved when `threads = n`.
+
+### Performance
+[logo]: performance.png
